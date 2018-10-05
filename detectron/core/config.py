@@ -71,6 +71,9 @@ __C.TRAIN.WEIGHTS = b''
 # If multiple datasets are listed, the model is trained on their union
 __C.TRAIN.DATASETS = ()
 
+# Limit number of training samples to given percentage
+__C.TRAIN.DATA_PERCENTAGE = 100
+
 # Scales to use during training
 # Each scale is the pixel size of an image's shortest side
 # If multiple scales are listed, then one is selected uniformly at random for
@@ -1019,6 +1022,8 @@ __C.EXPECTED_RESULTS_EMAIL = b''
 # specified by DOWNLOAD_CACHE
 __C.DOWNLOAD_CACHE = b'/tmp/detectron-download-cache'
 
+# If not None, append logging to given filename in OUTPUT_DIR
+__C.LOGFILE = ""
 
 # ---------------------------------------------------------------------------- #
 # Cluster options

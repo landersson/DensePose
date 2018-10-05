@@ -15,6 +15,7 @@ from __future__ import unicode_literals
 from past.builtins import basestring
 import logging
 import numpy as np
+import random
 
 from detectron.core.config import cfg
 from detectron.datasets.json_dataset import JsonDataset
@@ -55,6 +56,13 @@ def combined_roidb_for_training(dataset_names, proposal_files):
     for r in roidbs[1:]:
         roidb.extend(r)
     roidb = filter_for_training(roidb)
+    logger.info('Collected {} usable training RoIs'.format(len(roidb)))
+
+    random.shuffle(roidb)
+    if cfg.TRAIN.DATA_PERCENTAGE != 100:
+        roidb = roidb[:(cfg.TRAIN.DATA_PERCENTAGE * len(roidb) // 100)]
+
+    logger.info('Using {}% ({}) of usable training RoIs'.format(cfg.TRAIN.DATA_PERCENTAGE, len(roidb)))
 
     logger.info('Computing bounding-box regression targets...')
     add_bbox_regression_targets(roidb)
@@ -120,7 +128,7 @@ def filter_for_training(roidb):
             valid = valid and entry['has_visible_keypoints']
         if cfg.MODEL.BODY_UV_ON and cfg.BODY_UV_RCNN.BODY_UV_IMS:
             # Exclude images with no body uv
-            valid = valid and entry['has_body_uv']        
+            valid = valid and entry['has_body_uv']
 	return valid
 
     num = len(roidb)

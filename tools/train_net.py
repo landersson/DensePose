@@ -15,6 +15,7 @@ from __future__ import unicode_literals
 import argparse
 import cv2  # NOQA (Must import before importing caffe2 due to bug in cv2)
 import logging
+import random
 import numpy as np
 import pprint
 import sys
@@ -97,6 +98,7 @@ def main():
     # be removed with a reasonble execution-speed tradeoff (such as certain
     # non-deterministic cudnn functions).
     np.random.seed(cfg.RNG_SEED)
+    random.seed(cfg.RNG_SEED)
     # Execute the training run
     checkpoints = detectron.utils.train.train_model()
     # Test the trained model
