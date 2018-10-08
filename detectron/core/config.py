@@ -1023,7 +1023,7 @@ __C.EXPECTED_RESULTS_EMAIL = b''
 __C.DOWNLOAD_CACHE = b'/tmp/detectron-download-cache'
 
 # If not None, append logging to given filename in OUTPUT_DIR
-__C.LOGFILE = ""
+__C.LOGFILE = "train.log"
 
 # ---------------------------------------------------------------------------- #
 # Cluster options

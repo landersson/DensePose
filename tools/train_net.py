@@ -12,6 +12,7 @@ from __future__ import division
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import os
 import argparse
 import cv2  # NOQA (Must import before importing caffe2 due to bug in cv2)
 import logging
@@ -26,6 +27,7 @@ from detectron.core.config import assert_and_infer_cfg
 from detectron.core.config import cfg
 from detectron.core.config import merge_cfg_from_file
 from detectron.core.config import merge_cfg_from_list
+from detectron.core.config import get_output_dir
 from detectron.core.test_engine import run_inference
 from detectron.utils.logging import setup_logging
 import detectron.utils.c2 as c2_utils
@@ -84,12 +86,22 @@ def main():
     logger = setup_logging(__name__)
     logging.getLogger('detectron.roi_data.loader').setLevel(logging.INFO)
     args = parse_args()
-    logger.info('Called with args:')
-    logger.info(args)
     if args.cfg_file is not None:
         merge_cfg_from_file(args.cfg_file)
     if args.opts is not None:
         merge_cfg_from_list(args.opts)
+
+    if cfg.LOGFILE:
+        output_dir = get_output_dir(cfg.TRAIN.DATASETS, training=True)
+        print("OUTPUT_DIR=", output_dir)
+        root_logger = logging.getLogger()
+        root_logger.setLevel(logging.INFO)
+        fh = logging.FileHandler(os.path.join(output_dir, cfg.LOGFILE))
+        fh.setLevel(logging.INFO)
+        root_logger.addHandler(fh)
+
+    logger.info('Called with args:')
+    logger.info(args)
     assert_and_infer_cfg()
     logger.info('Training with config:')
     logger.info(pprint.pformat(cfg))

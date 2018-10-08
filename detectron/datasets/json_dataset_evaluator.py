@@ -509,7 +509,6 @@ def _coco_body_uv_results_one_category(json_dataset, boxes, body_uvs, cat_id):
         # ys = xywh_box_dets[:, 1]
         # ws = xywh_box_dets[:, 2]
         # hs = xywh_box_dets[:, 3]
-        
         # Convert the uv fields to uint8.
         for uv in uv_dets:
             uv[1:3,:,:] = uv[1:3,:,:]*255

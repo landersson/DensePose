@@ -257,7 +257,7 @@ class JsonDataset(object):
                     im_has_any_body_uv = True
                 else:
                     ignore_UV_body[ix] = True
-                    
+
             if obj['iscrowd']:
                 # Set overlap to -1 for all classes for crowd objects
                 # so they will be excluded during training

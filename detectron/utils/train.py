@@ -47,11 +47,6 @@ def train_model():
         # The final model was found in the output directory, so nothing to do
         return checkpoints
 
-    if cfg.LOGFILE:
-        fh = logging.FileHandler(os.path.join(output_dir, cfg.LOGFILE))
-        fh.setLevel(logging.INFO)
-        logger.addHandler(fh)
-
     setup_model_for_training(model, weights_file, output_dir)
     training_stats = TrainingStats(model)
     CHECKPOINT_PERIOD = int(cfg.TRAIN.SNAPSHOT_ITERS / cfg.NUM_GPUS)
